@@ -1,3 +1,4 @@
+```
 git clone https://github.com/vivekbhadra/docker_microservices_demo_python.git
 cd ~/docker_microservices_demo_python
 unzip microservices-demo.zip
@@ -183,5 +184,4 @@ data-service  | 2026-03-04 08:46:05,520 [INFO] werkzeug: 172.19.0.3 - - [04/Mar/
 
 
 api-service   | 2026-03-04 08:46:05,521 [INFO] werkzeug: 172.19.0.1 - - [04/Mar/2026 08:46:05] "GET /api/data HTTP/1.1" 200 -
-
-
+```
