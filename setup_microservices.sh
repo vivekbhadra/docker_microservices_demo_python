@@ -1,6 +1,14 @@
-cd ~/docker_microservices_demo_python/microservices-demo
+#!/bin/bash
+set -e
 
-# ── data-service/app.py ──────────────────────────────────────────
+# ── Step 1: Create project folders ──────────────────────────────
+mkdir -p microservices-demo/api-service
+mkdir -p microservices-demo/data-service
+
+# ── Step 2: Move into project root ──────────────────────────────
+cd microservices-demo
+
+# ── Step 3: data-service/app.py ─────────────────────────────────
 cat > data-service/app.py << 'EOF'
 import logging
 import os
@@ -33,12 +41,12 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5001)
 EOF
 
-# ── data-service/requirements.txt ───────────────────────────────
+# ── Step 4: data-service/requirements.txt ───────────────────────
 cat > data-service/requirements.txt << 'EOF'
 flask==3.0.3
 EOF
 
-# ── data-service/Dockerfile ──────────────────────────────────────
+# ── Step 5: data-service/Dockerfile ─────────────────────────────
 cat > data-service/Dockerfile << 'EOF'
 FROM python:3.11-slim
 WORKDIR /app
@@ -50,7 +58,7 @@ EXPOSE 5001
 CMD ["python", "app.py"]
 EOF
 
-# ── api-service/app.py ───────────────────────────────────────────
+# ── Step 6: api-service/app.py ──────────────────────────────────
 cat > api-service/app.py << 'EOF'
 import logging
 import os
@@ -81,13 +89,13 @@ if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
 EOF
 
-# ── api-service/requirements.txt ────────────────────────────────
+# ── Step 7: api-service/requirements.txt ────────────────────────
 cat > api-service/requirements.txt << 'EOF'
 flask==3.0.3
 requests==2.32.3
 EOF
 
-# ── api-service/Dockerfile ───────────────────────────────────────
+# ── Step 8: api-service/Dockerfile ──────────────────────────────
 cat > api-service/Dockerfile << 'EOF'
 FROM python:3.11-slim
 WORKDIR /app
@@ -100,7 +108,7 @@ EXPOSE 5000
 CMD ["python", "app.py"]
 EOF
 
-# ── docker-compose.yml ───────────────────────────────────────────
+# ── Step 9: docker-compose.yml ──────────────────────────────────
 cat > docker-compose.yml << 'EOF'
 services:
 
@@ -131,3 +139,11 @@ networks:
   microservices-net:
     driver: bridge
 EOF
+
+# ── Done ─────────────────────────────────────────────────────────
+echo ""
+echo "✅ All files created. Structure:"
+tree .
+echo ""
+echo "▶  To run:  docker compose up --build"
+echo "▶  To test: curl http://localhost:5000/api/data"
